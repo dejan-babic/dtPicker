@@ -18,19 +18,23 @@ Ext.onReady(function(){
             items:[{
                 xtype: 'button',
                 text: 'Users',
-                scale   : 'large'
+                cls: 'myButton'
             },{
                 xtype: 'button',
-                text: 'Jobs'
+                text: 'Jobs',
+                cls: 'myButton'
             },{
                 xtype: 'button',
                 text: 'Settings',
-                cls: 'x-button-right'
+                cls: 'myButton'
+
             },{
                 xtype: 'button',
                 text: 'Lucky Guy!',
-                aligh: 'right'
+                cls: 'myButton'
             }]
         }]
     });
+
+
 });
