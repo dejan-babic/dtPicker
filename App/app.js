@@ -15,7 +15,22 @@ Ext.onReady(function(){
         },{
             region: 'center',
             xtype: 'panel',
-            html: 'center'
+            items:[{
+                xtype: 'button',
+                text: 'Users',
+                scale   : 'large'
+            },{
+                xtype: 'button',
+                text: 'Jobs'
+            },{
+                xtype: 'button',
+                text: 'Settings',
+                cls: 'x-button-right'
+            },{
+                xtype: 'button',
+                text: 'Lucky Guy!',
+                aligh: 'right'
+            }]
         }]
     });
 });
