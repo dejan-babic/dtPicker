@@ -35,6 +35,4 @@ Ext.onReady(function(){
             }]
         }]
     });
-
-
 });
