@@ -27,7 +27,7 @@ build/Release
 node_modules
 
 # Extjs Lib
-/lib/
+#/lib/
 
 # an unkown dir that just appeard.
 .idea/
