@@ -2,8 +2,9 @@
  * Created by mawaheb.seraj on 9/14/2015.
  */
 Ext.onReady(function(){
+	Ext.Ajax.useDefaultXhrHeader = false;
     var login_form = new Ext.FormPanel({
-        url: 'http://www.mocky.io/v2/55f7e6ce0c260f81000a49f8',
+        url: 'http://www.mocky.io/v2/55f7fee70c260f33030a4a1c',
         renderTo: document.body,
         frame: true,
         title: 'login form',
@@ -11,7 +12,7 @@ Ext.onReady(function(){
         items: [{
             xtype       : 'textfield',
             fieldLabel  : 'Password',
-            name        : 'password',
+            name        : 'password'
             //allowBlank  : false
         }],
         buttons: [{
@@ -21,10 +22,11 @@ Ext.onReady(function(){
                 login_form.getForm().submit({
                     success: function(f,a){
                         Ext.Msg.alert('Success', 'It worked');
-                    },
-                    failure: function(f,a){
-                        Ext.Msg.alert('Warning', a.result.errormsg);
                     }
+                    //,
+                    //failure: function(f,a){
+                    //    Ext.Msg.alert('Warning', a.result.errormsg);
+                    //}
                 });
             }
         },{
@@ -32,5 +34,4 @@ Ext.onReady(function(){
             name        : 'dismiss'
         }]
     })
-
 });
