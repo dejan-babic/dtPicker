@@ -26,9 +26,7 @@ Ext.onReady(function(){
 			},{
 				xtype: 'button',
 				text: 'Settings',
-				cls: 'myButton'
-
-
+				cls: 'btn-big'
 			},{
 				xtype: 'button',
 				text: 'Lucky Guy!',
