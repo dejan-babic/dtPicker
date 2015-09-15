@@ -9,6 +9,7 @@
 include_once 'JsonEncode.php';
 include_once 'GetUsers.php';
 include_once 'DbConn.php';
+include_once 'InsertUser.php';
 class Response{
 
     function validate(){
@@ -22,7 +23,8 @@ class Response{
 
     }
     function insertUser(){
-        $response=new JsonEncode(true,'user inserted','name of user ');
+        $lastUser=new GetUsers();
+        $response=new JsonEncode(true,'user inserted',$lastUser->lastUser);
 
     }
 }

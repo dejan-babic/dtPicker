@@ -12,6 +12,7 @@ class getUsers
 {
 
     public $usersResolt;
+    public $lastUser;
 
     function __construct()
     {
@@ -22,6 +23,7 @@ class getUsers
             $stmt->execute();
             $resolt = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $this->usersResolt = $resolt;
+            $this->lastUser = end($resolt);
 
         } catch (PDOException $e) {
             die("An error has occurred! " . $e->getMessage());

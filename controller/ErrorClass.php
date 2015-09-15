@@ -23,6 +23,12 @@ class Error
                 $error=new JsonEncode(false,'Something went wrong , user has not been inserted',false);
 
         }
+        function serverMethodNotExists(){
+
+                $error=new JsonEncode(false,'Method does not exist',false);
+        }
+
+
 }
 
 
