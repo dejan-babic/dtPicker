@@ -10,19 +10,21 @@ include_once 'DbConn.php';
 include_once 'GetUsers.php';
 include_once'Response.php';
 include_once'ErrorClass.php';
-class insertUser{
+
+class InsertUser{
 
         public $numOfRows;
+        public $lastUserAdded;
 
         function __construct(){
         $userName = $_GET['newUserNameInput'];
         try {
-        $conn = new DbConn();
-        $link = $conn->connect();
-        $stmt = $link->prepare("INSERT INTO users (name)VALUES (:user)");
-        $stmt->execute(array(':user' => $userName));
-        $this->numOfRows = $stmt->rowCount();
-        $this->response();
+                $conn = new DbConn();
+                $link = $conn->connect();
+                $stmt = $link->prepare("INSERT INTO users (name) VALUES (:user)");
+                $stmt->execute(array(':user' => $userName));
+                $this->response();
+
 
         } catch (PDOException $e) {
                 $error=new Error();
@@ -33,15 +35,18 @@ class insertUser{
 
         function response()
         {
-                if ($this->numOfRows == 1) {
-                        $response = new Response();
-                        $response->insertUser();
 
-                } else {
-                        $error = new Error();
-                        $error->insertUserFail();
+                $response = new Response();
+                $response->insertUser();
 
-                }
+        }
+        function queryDataBase(){
+
+                $conn = new DbConn();
+                $link = $conn->connect();
+                $stmt = $link->prepare("INSERT INTO users (name) VALUES (:user)");
+                return $stmt->execute(array(':user' => $userName));
         }
 
 }
+

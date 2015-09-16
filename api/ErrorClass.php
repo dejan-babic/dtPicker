@@ -28,6 +28,11 @@ class Error
                 $error=new JsonEncode(false,'Method does not exist',false);
         }
 
+        function dbErrorConnection(){
+
+                $error=new JsonEncode(false,'Not connected to base',false);
+        }
+
 
 }
 

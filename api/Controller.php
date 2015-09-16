@@ -21,14 +21,14 @@ class Controller{
     function getUsers()
     {
 
-        $users = new Response();
+        $users = new GetUsers();
 
     }
 
     function insertUser()
     {
 
-        $insertNewUser = new insertUser();
+        $insertNewUser = new InsertUser();
 
     }
 

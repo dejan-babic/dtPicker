@@ -7,12 +7,15 @@
  * Time: 12:57 PM
  */
 include_once'DbConn.php';
+include_once'Response.php';
+include_once'ErrorClass.php';
 
-class getUsers
+class GetUsers
 {
 
-    public $usersResolt;
-    public $lastUser;
+    public $usersResults;
+
+    public $numOfRows;
 
     function __construct()
     {
@@ -21,17 +24,27 @@ class getUsers
             $link = $conn->connect();
             $stmt = $link->prepare("SELECT * FROM users");
             $stmt->execute();
-            $resolt = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $this->usersResolt = $resolt;
-            $this->lastUser = end($resolt);
+            $this->userResolts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $this->response($this->userResolts);
 
         } catch (PDOException $e) {
-            die("An error has occurred! " . $e->getMessage());
+            $error = new Error();
+            $error->insertUserFail();
+        }
+
+    }
+        function response($users){
+
+            $response=new Response();
+            $response->getUsers($users);
         }
 
 
-    }
+
 }
+
+
+
 
 
 

@@ -13,18 +13,18 @@ include_once 'InsertUser.php';
 class Response{
 
     function validate(){
-        $response=new JsonEncode(true,'user logged in','home.html');
+        $response=new JsonEncode(true,'user logged in',true);
     }
 
-    function getUsers(){
+    function getUsers($users){
 
-        $users=new GetUsers();
-        $response=new JsonEncode(true,'list of users OK',$users->usersResolt);
+
+        $response=new JsonEncode(true,'list of users OK',$users);
 
     }
     function insertUser(){
-        $lastUser=new GetUsers();
-        $response=new JsonEncode(true,'user inserted',$lastUser->lastUser);
+
+        $response=new JsonEncode(true,'user inserted',true);
 
     }
 }
