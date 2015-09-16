@@ -2,9 +2,63 @@
  * Created by mawaheb.seraj on 9/14/2015.
  */
 Ext.onReady(function(){
-	Ext.Ajax.useDefaultXhrHeader = false;
-    var login_form = new Ext.FormPanel({
-        url: 'http://www.mocky.io/v2/55f7fee70c260f33030a4a1c',
+    //submitForm = $.ajax({
+    //    url: 'http://www.mocky.io/v2/55f91c71feb82cc20f99c2e5',
+    //    dataType: 'JSONP',
+    //    jsonpCallback: 'callbackFnc',
+    //    type: 'GET',
+    //    async: false,
+    //    crossDomain: true,
+    //    success: function () { console.log('Worked, Success'); },
+    //    failure: function () { console.log('Failed');},
+    //    complete: function (data) {
+    //        if (data.readyState == '4' && data.status == '200') {
+    //            //console.log('Worked');
+    //        }
+    //        else {
+    //            //console.log('Failed');
+    //        }
+    //    }
+    //});
+
+    /* This is a method to get the Password field value*/
+	var getPassField = function(){
+		var passVal = $('#password').val();
+		if (passVal != '' ){
+			submitForm(passVal)
+		}
+	};
+
+	/*Gets pass val from getPassField() and sends it to the backend*/
+	var submitForm = function(pass){
+		var request = $.ajax({
+			crossDomain: true,
+			dataType: 'JSONP',
+			method: 'PUT',
+			data: pass,
+			url: 'http://www.mocky.io/v2/55f94adbfeb82c0c1599c30d',
+		});
+
+		request.success(function(response) {
+			if (response.success === true ) {
+				console.log('Worked, success is set to true');
+			}else{
+				console.log('Worked, But success is false.');
+			}
+		});
+
+		request.done(function(data) {
+			console.log(data.msg)
+		});
+
+		request.fail(function(data) {
+			console.log("Oh No, It faild");
+		});
+	};
+
+
+    var loginForm = new Ext.FormPanel({
+        //url: 'http://www.mocky.io/v2/55f82ebf0c260f5a080a4a56',
         renderTo: document.body,
         frame: true,
         title: 'login form',
@@ -12,23 +66,24 @@ Ext.onReady(function(){
         items: [{
             xtype       : 'textfield',
             fieldLabel  : 'Password',
-            name        : 'password'
+            id        : 'password'
             //allowBlank  : false
         }],
         buttons: [{
             text        : 'Login',
             name        : 'btnLogin',
-            handler: function(){
-                login_form.getForm().submit({
-                    success: function(f,a){
-                        Ext.Msg.alert('Success', 'It worked');
-                    }
-                    //,
-                    //failure: function(f,a){
-                    //    Ext.Msg.alert('Warning', a.result.errormsg);
-                    //}
-                });
-            }
+	        handler: getPassField
+            //handler: function(){
+            //    loginForm.getForm().submit({
+            //        success: function(f,a){
+            //            Ext.Msg.alert('Success', 'It worked');
+            //        }
+            //        //,
+            //        //failure: function(f,a){
+            //        //    Ext.Msg.alert('Warning', a.result.errormsg);
+            //        //}
+            //    });
+            //}
         },{
             text        : 'Dismiss',
             name        : 'dismiss'
