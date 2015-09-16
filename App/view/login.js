@@ -36,14 +36,18 @@ Ext.onReady(function(){
 			dataType: 'JSONP',
 			method: 'PUT',
 			data: pass,
-			url: 'http://www.mocky.io/v2/55f94adbfeb82c0c1599c30d',
+			url: 'http://www.mocky.io/v2/55f956e3feb82c5c1699c320',
 		});
 
 		request.success(function(response) {
 			if (response.success === true ) {
 				console.log('Worked, success is set to true');
+				loginForm.hide();
+				location.href = 'landing-page.html';
 			}else{
 				console.log('Worked, But success is false.');
+				alert(response.msg);
+				//TODO change to ext alert style
 			}
 		});
 
