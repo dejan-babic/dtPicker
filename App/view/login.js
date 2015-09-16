@@ -36,7 +36,7 @@ Ext.onReady(function(){
 			dataType: 'JSONP',
 			method: 'PUT',
 			data: pass,
-			url: 'http://www.mocky.io/v2/55f956e3feb82c5c1699c320',
+			url: configObj.url,
 		});
 
 		request.success(function(response) {
