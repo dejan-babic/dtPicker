@@ -6,7 +6,8 @@
  * Date: 9/14/2015
  * Time: 2:07 PM
  */
-include_once 'JsonEncode.php';
+
+include 'autoload/boot.php';
 class Error
 {
 

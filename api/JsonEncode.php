@@ -21,9 +21,9 @@ class JsonEncode
                 $this->data=$data;
 
 
-                header('Content-Type: Aplication/json');
+                header('Content-Type: Application/json');
                 echo json_encode(
-                    array("response" => $this->success,
+                    array("success" => $this->success,
                         "msg" => $this->msg,
                         "data" => $this->data));
 

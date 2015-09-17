@@ -6,10 +6,8 @@
  * Date: 9/14/2015
  * Time: 12:57 PM
  */
-include_once'DbConn.php';
-include_once'Response.php';
-include_once'ErrorClass.php';
 
+include 'autoload/boot.php';
 class GetUsers
 {
 

@@ -7,23 +7,25 @@
  * Time: 12:41 PM
  */
 
-include_once 'Response.php';
-include_once'ErrorClass.php';
+
+include 'autoload/boot.php';
 class Validate{
 
         function __construct()
         {
+
             $userInput = $_GET['userInput'];
+
             if ($userInput == 'devtech') {
 
                 $response= new Response();
-                return $response->validate();
+                $response->validate();
 
 
             } else {
 
                $error= new Error();
-               return $error->validateFail();
+               $error->validateFail();
 
             }
 

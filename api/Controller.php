@@ -5,41 +5,38 @@
  * Date: 9/14/2015
  * Time: 10:40 AM
  */
-include_once 'ValidateUser.php';
-include_once 'GetUsers.php';
-include_once 'InsertUser.php';
-include_once 'ErrorClass.php';
 
+include 'autoload/boot.php';
 class Controller{
 
     function validate()
     {
 
-        $validation = new Validate();
+        new Validate();
 
     }
     function getUsers()
     {
 
-        $users = new GetUsers();
+        new GetUsers();
 
     }
 
     function insertUser()
     {
 
-        $insertNewUser = new InsertUser();
+        new InsertUser();
 
     }
 
 }
 
 
-$serverMethod=$_SERVER['REQUEST_METHOD'];
+$ApiCheck = new Controller();
 
 switch ($serverMethod){
 
-    case 'GET':$ApiCheck = new Controller();
+    case "GET":
                if (method_exists($ApiCheck, $_GET['method'])) {
                    $ApiCheck->$_GET['method']();
 
@@ -50,17 +47,18 @@ switch ($serverMethod){
                }
                 break;
 
-    case 'POST':$ApiCheck = new Controller();
-                if(method_exists($ApiCheck, $_POST['method'])) {
-                    $ApiCheck->$_POST['method']();
-                }
-                    $error= new Error();
-                    $error->serverMethodNotExists();
-                break;
+    case "POST":  if (method_exists($ApiCheck, $_POST['method'])) {
+                        $ApiCheck->$_POST['method']();
+
+                    }else{
+
+                       echo 'nije reseno za POST';
+                    }
+                        break;
 
     default: $error= new Error();
              $error->serverMethodNotExists();
+                 break;
 }
 ?>
-
 
