@@ -60,9 +60,6 @@ Ext.onReady(function(){
             text        : 'Login',
             name        : 'btnLogin',
 	        handler: submitForm
-        },{
-            text        : 'Dismiss',
-            name        : 'dismiss'
         }]
     })
 });
