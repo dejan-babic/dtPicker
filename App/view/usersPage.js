@@ -21,6 +21,16 @@ Ext.onReady(function(){
 		title: 'Users',
 		store: store,
 		autoHeight: true,
+		sm: new Ext.grid.RowSelectionModel({
+			singleSelect: true,
+			listeners:{
+				rowselect: {
+					fn: function(sm, index, record){
+						Ext.Msg.alert('You have selected', record.data.id + ' ' + record.data.name)
+					}
+				}
+			}
+		}),
 		columns:[
 			{header: "#", dataIndex: 'id'},
 			{header: "Name", dataIndex: 'name'}
