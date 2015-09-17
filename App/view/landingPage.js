@@ -21,7 +21,10 @@ Ext.onReady(function(){
 			items:[{
 				xtype: 'button',
 				text: 'Users',
-				cls: 'btn-big'
+				cls: 'btn-big',
+				handler: function(){
+					location.href = 'users-page.html';
+				}
 			},{
 				xtype: 'button',
 				text: 'Jobs',
