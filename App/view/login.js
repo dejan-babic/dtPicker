@@ -2,25 +2,6 @@
  * Created by mawaheb.seraj on 9/14/2015.
  */
 Ext.onReady(function(){
-    //submitForm = $.ajax({
-    //    url: 'http://www.mocky.io/v2/55f91c71feb82cc20f99c2e5',
-    //    dataType: 'JSONP',
-    //    jsonpCallback: 'callbackFnc',
-    //    type: 'GET',
-    //    async: false,
-    //    crossDomain: true,
-    //    success: function () { console.log('Worked, Success'); },
-    //    failure: function () { console.log('Failed');},
-    //    complete: function (data) {
-    //        if (data.readyState == '4' && data.status == '200') {
-    //            //console.log('Worked');
-    //        }
-    //        else {
-    //            //console.log('Failed');
-    //        }
-    //    }
-    //});
-
     /* This is a method to get the Password field value*/
 	var getPassField = function(){
 		var passVal = $('#password').val();
@@ -36,7 +17,7 @@ Ext.onReady(function(){
 			dataType: 'JSONP',
 			method: 'PUT',
 			data: pass,
-			url: configObj.url,
+			url: config.url,
 		});
 
 		request.success(function(response) {
@@ -77,17 +58,6 @@ Ext.onReady(function(){
             text        : 'Login',
             name        : 'btnLogin',
 	        handler: getPassField
-            //handler: function(){
-            //    loginForm.getForm().submit({
-            //        success: function(f,a){
-            //            Ext.Msg.alert('Success', 'It worked');
-            //        }
-            //        //,
-            //        //failure: function(f,a){
-            //        //    Ext.Msg.alert('Warning', a.result.errormsg);
-            //        //}
-            //    });
-            //}
         },{
             text        : 'Dismiss',
             name        : 'dismiss'
