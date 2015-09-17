@@ -33,6 +33,8 @@ class Controller{
 
 
 $ApiCheck = new Controller();
+$serverMethod = SERVER['REQUEST_METHOD'];
+
 
 switch ($serverMethod){
 
