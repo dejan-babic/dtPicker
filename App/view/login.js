@@ -2,24 +2,26 @@
  * Created by mawaheb.seraj on 9/14/2015.
  */
 Ext.onReady(function(){
-    /* This is a method to get the Password field value*/
+
+    /* This is a method to get the Password field value if exists, else, it returns false, which is used to trigger an alert box*/
 	var getPassField = function(){
 		var passVal = $('#password').val();
-		if (passVal != '' ){
-			submitForm(passVal)
-		}
+		return passVal == '' ? false:passVal;
 	};
 
 	/*Gets pass val from getPassField() and sends it to the backend*/
-	var submitForm = function(pass){
-		var request = $.ajax({
-			crossDomain: true,
-			dataType: 'JSONP',
-			method: 'PUT',
-			data: pass,
-			url: config.url,
-		});
+	var submitForm = function(){
+		var request;
+		var pass = getPassField();
+		if (pass == false){
+			alert("Please fill in password");
+			return
+		}else {
+			request = $.ajax({
+				crossDomain: true, dataType: 'JSONP', method: 'PUT', data: pass, url: config.url
 
+			});
+		}
 		request.success(function(response) {
 			if (response.success === true ) {
 				console.log('Worked, success is set to true');
@@ -57,7 +59,7 @@ Ext.onReady(function(){
         buttons: [{
             text        : 'Login',
             name        : 'btnLogin',
-	        handler: getPassField
+	        handler: submitForm
         },{
             text        : 'Dismiss',
             name        : 'dismiss'
