@@ -1,6 +1,50 @@
 /**
  * Created by mawaheb.seraj on 9/17/2015.
  */
+/** The following Override is used to fix an issue where a text field label is not hidden when the text field is.
+	For more details, You can refer to:
+    https://www.sencha.com/forum/showthread.php?25479-2.0.1-2.1-Field.destroy()-on-Fields-rendered-by-FormLayout-does-not-clean-up.&p=120152&viewfull=1#post120152
+**/
+Ext.override(Ext.layout.FormLayout, {
+	renderItem : function(c, position, target){
+		if(c && !c.rendered && c.isFormField && c.inputType != 'hidden'){
+			var args = [
+				c.id, c.fieldLabel,
+				c.labelStyle||this.labelStyle||'',
+				this.elementStyle||'',
+				typeof c.labelSeparator == 'undefined' ? this.labelSeparator : c.labelSeparator,
+				(c.itemCls||this.container.itemCls||'') + (c.hideLabel ? ' x-hide-label' : ''),
+				c.clearCls || 'x-form-clear-left'
+			];
+			if(typeof position == 'number'){
+				position = target.dom.childNodes[position] || null;
+			}
+			if(position){
+				c.itemCt = this.fieldTpl.insertBefore(position, args, true);
+			}else{
+				c.itemCt = this.fieldTpl.append(target, args, true);
+			}
+			c.actionMode = 'itemCt';
+			c.render('x-form-el-'+c.id);
+			c.container = c.itemCt;
+			c.actionMode = 'container';
+		}else {
+			Ext.layout.FormLayout.superclass.renderItem.apply(this, arguments);
+		}
+	},
+});
+Ext.override(Ext.form.TriggerField, {
+	actionMode: 'wrap',
+	onShow: Ext.form.TriggerField.superclass.onShow,
+	onHide: Ext.form.TriggerField.superclass.onHide
+});
+Ext.override(Ext.form.Checkbox, {
+	actionMode: 'wrap',
+	getActionEl: Ext.form.Checkbox.superclass.getActionEl
+});
+Ext.override(Ext.form.HtmlEditor, {
+	actionMode: 'wrap'
+});
 Ext.onReady(function(){
 	var store = new Ext.data.Store({
 		data: [
@@ -24,17 +68,21 @@ Ext.onReady(function(){
 	var usersForm = new Ext.FormPanel({
 		title: 'Users Details Form',
 		id: usersForm,
-
 		items: [{
+			xtype: 'label',
+			text: 'Please select a user from the list'
+		},{
 			xtype: 'textfield',
 			fieldLabel: 'User Name',
 			id: 'userField',
-			floating: true
+			hidden: true
 		}],
 		buttons: [
 			{
-				disabled: true,
-				text: 'Update'
+				text: 'Update',
+				handler: function() {
+					Ext.getCmp('userField').setVisible(true)
+				}
 			},{
 				text: 'Delete',
 				handler: function(){
