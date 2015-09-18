@@ -28,12 +28,17 @@ class Controller{
         new InsertUser();
 
     }
+    function deleteUser(){
 
+        new DeleteUser();
+
+    }
 }
 
 
 $ApiCheck = new Controller();
-$serverMethod = SERVER['REQUEST_METHOD'];
+$serverMethod = $_SERVER['REQUEST_METHOD'];
+
 
 
 switch ($serverMethod){
@@ -53,8 +58,8 @@ switch ($serverMethod){
                         $ApiCheck->$_POST['method']();
 
                     }else{
-
-                       echo 'nije reseno za POST';
+                    $error= new Error();
+                    $error->serverMethodNotExists();
                     }
                         break;
 

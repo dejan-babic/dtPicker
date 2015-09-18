@@ -10,16 +10,23 @@
 include 'autoload/boot.php';
 class InsertUser{
 
+        public $userInput;
         public $numOfRows;
-        public $lastUserAdded;
+
 
         function __construct(){
-        $userName = $_GET['newUserNameInput'];
+
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                $this->userInput = $_GET['newUserNameInput'];
+            } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->userInput = $_POST['newUserNameInput'];
+            }
+
         try {
                 $conn = new DbConn();
                 $link = $conn->connect();
                 $stmt = $link->prepare("INSERT INTO users (name) VALUES (:user)");
-                $stmt->execute(array(':user' => $userName));
+                $stmt->execute(array(':user' => $this->userInput));
                 $this->response();
 
 

@@ -13,25 +13,30 @@ class Error
 
 
         function validateFail(){
-               $error=new JsonEncode(false,'Validate failed',false);
+              new JsonEncode(false,'Validate failed',false);
         }
 
         function getUsersFail(){
-                $error=new JsonEncode(false,'No users retrived',false);
+               new JsonEncode(false,'No users retrived',false);
 
         }
         function insertUserFail(){
-                $error=new JsonEncode(false,'Something went wrong , user has not been inserted',false);
+               new JsonEncode(false,'Something went wrong , user has not been inserted',false);
 
         }
         function serverMethodNotExists(){
 
-                $error=new JsonEncode(false,'Method does not exist',false);
+                new JsonEncode(false,'Method does not exist',false);
         }
 
         function dbErrorConnection(){
 
-                $error=new JsonEncode(false,'Not connected to base',false);
+                new JsonEncode(false,'Not connected to base',false);
+        }
+        function deleteUserError($userId){
+
+                new JsonEncode(false,'No user with id = '.$userId.' exists'  ,false);
+
         }
 
 

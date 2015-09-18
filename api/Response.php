@@ -25,5 +25,10 @@ class Response{
         new JsonEncode(true,'user inserted',true);
 
     }
+    function deleteUser($userName,$Id){
+
+        new JsonEncode(true,'user with the name of '.$Id.' and with the id of '.$userName.' has been deleted' ,true);
+
+    }
 }
 
