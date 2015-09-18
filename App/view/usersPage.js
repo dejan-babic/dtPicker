@@ -25,11 +25,37 @@ Ext.onReady(function(){
 			fieldLabel: 'User Name',
 			id: 'userField',
 			floating: true
-		},{
-			xtype: 'button',
-			text: "One"
+		}],
+		buttons: [
+			{
+				xtype: 'button',
+				disabled: true,
+				text: 'Update'
+			},{
+				xtype: 'button',
+				text: 'Delete',
+				handler: function(){
+					var sm = grid.getSelectionModel();
+					var sel = sm.getSelected();
+					if(sm.hasSelection()){
+						Ext.Msg.show({
+							title: "Remove user",
+							buttons: Ext.MessageBox.YESNOCANCEL,
+							msg: 'Remove ' + sel.data.name + '?',
+							fn: function(btn){
+								if (btn == 'yes'){
+									store.remove(sel);
+									usersForm.getForm().reset();
+								}
+							}
+						})
+					}
+				}
 		}]
 	});
+	//var clearForm = function(){
+	//
+	//}
 
 	var grid = new Ext.grid.GridPanel({
 		frame: true,
