@@ -16,6 +16,21 @@ Ext.onReady(function(){
 		reader: new Ext.data.ArrayReader({id: 'id'}, ['id', 'name'])
 	});
 
+	var usersForm = new Ext.FormPanel({
+		title: 'Users Details Form',
+		id: usersForm,
+
+		items: [{
+			xtype: 'textfield',
+			fieldLabel: 'User Name',
+			id: 'userField',
+			floating: true
+		},{
+			xtype: 'button',
+			text: "One"
+		}]
+	});
+
 	var grid = new Ext.grid.GridPanel({
 		frame: true,
 		title: 'Users',
@@ -26,7 +41,7 @@ Ext.onReady(function(){
 			listeners:{
 				rowselect: {
 					fn: function(sm, index, record){
-						Ext.Msg.alert('You have selected', record.data.id + ' ' + record.data.name)
+						Ext.getCmp('userField').setValue(record.data.name)
 					}
 				}
 			}
@@ -57,7 +72,8 @@ Ext.onReady(function(){
 			]
 		},{
 			region: 'center',
-			xtype: 'panel'
+			xtype: 'panel',
+			items: usersForm
 		}]
 	});
 });
