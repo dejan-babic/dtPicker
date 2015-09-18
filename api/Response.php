@@ -30,5 +30,10 @@ class Response{
         new JsonEncode(true,'user with the name of '.$Id.' and with the id of '.$userName.' has been deleted' ,true);
 
     }
+    function updateUser(){
+
+        new JsonEncode(true,'User name changed' ,true);
+
+    }
 }
 

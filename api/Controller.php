@@ -33,6 +33,12 @@ class Controller{
         new DeleteUser();
 
     }
+
+    function updateUser(){
+
+        new UpdateUser();
+
+    }
 }
 
 
@@ -43,8 +49,7 @@ $serverMethod = $_SERVER['REQUEST_METHOD'];
 
 switch ($serverMethod){
 
-    case "GET":
-               if (method_exists($ApiCheck, $_GET['method'])) {
+    case "GET": if (method_exists($ApiCheck, $_GET['method'])) {
                    $ApiCheck->$_GET['method']();
 
                }else{
@@ -55,13 +60,14 @@ switch ($serverMethod){
                 break;
 
     case "POST":  if (method_exists($ApiCheck, $_POST['method'])) {
-                        $ApiCheck->$_POST['method']();
+                     $ApiCheck->$_POST['method']();
 
                     }else{
                     $error= new Error();
                     $error->serverMethodNotExists();
                     }
                         break;
+
 
     default: $error= new Error();
              $error->serverMethodNotExists();

@@ -10,5 +10,6 @@ class Autoloader
             return false;
         }else{
         include $file;
-    }}
+         }
+    }
 }

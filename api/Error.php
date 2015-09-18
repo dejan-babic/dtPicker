@@ -38,7 +38,11 @@ class Error
                 new JsonEncode(false,'No user with id = '.$userId.' exists'  ,false);
 
         }
+        function updateUserError(){
 
+                new JsonEncode(false,'Something went wrong , user has not been updated' ,false);
+
+        }
 
 }
 
