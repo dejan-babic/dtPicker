@@ -16,6 +16,11 @@ Ext.onReady(function(){
 		reader: new Ext.data.ArrayReader({id: 'id'}, ['id', 'name'])
 	});
 
+	var dsRecord = Ext.data.Record.create([
+		'id',
+		'name'
+	]);
+
 	var usersForm = new Ext.FormPanel({
 		title: 'Users Details Form',
 		id: usersForm,
@@ -28,11 +33,9 @@ Ext.onReady(function(){
 		}],
 		buttons: [
 			{
-				xtype: 'button',
 				disabled: true,
 				text: 'Update'
 			},{
-				xtype: 'button',
 				text: 'Delete',
 				handler: function(){
 					var sm = grid.getSelectionModel();
@@ -51,11 +54,27 @@ Ext.onReady(function(){
 						})
 					}
 				}
-		}]
+			}
+		]
 	});
-	//var clearForm = function(){
-	//
-	//}
+
+	var addNewUser = function(){
+		Ext.Msg.prompt('Add New User',
+			'Please Enter the new user\'s Data',
+			function(btn, text){
+				if (btn =='ok' && text != ""){
+					//alert('User name ' + text + 'Has been Entered.')
+					grid.getStore().insert(
+						// retrieving the count to insert the record at the end of the grid.
+						grid.getStore().getCount(),
+						new dsRecord({
+							name: text
+						})
+					)
+				}
+			}
+		)
+	};
 
 	var grid = new Ext.grid.GridPanel({
 		frame: true,
@@ -76,9 +95,12 @@ Ext.onReady(function(){
 			{header: "#", dataIndex: 'id'},
 			{header: "Name", dataIndex: 'name'}
 		],
-		buttons:[
-			{xtype: 'button', text: 'New User'}
-		]
+		buttons:[{
+			text: 'New User',
+			handler: addNewUser
+
+
+		}]
 	});
 	var viewport = new Ext.Viewport({
 		layout: 'border',
