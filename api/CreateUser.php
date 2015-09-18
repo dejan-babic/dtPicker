@@ -8,43 +8,73 @@
  */
 
 include 'autoload/boot.php';
-class InsertUser{
+class CreateUser
+{
 
-        public $userInput;
-        public $numOfRows;
+    public $userInput;
+    public $numOfRows;
 
 
-        function __construct(){
+    function __construct()
+    {
 
-            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                $this->userInput = $_GET['newUserNameInput'];
-            } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $this->userInput = $_POST['newUserNameInput'];
-            }
+        $this->checkMethod();
+        $this->checkNotEmpty();
+    }
 
+    function response()
+    {
+
+        $response = new Response();
+        $response->insertUser();
+
+    }
+
+    function checkMethod()
+    {
+
+
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $this->userInput = $_GET['userInput'];
+        } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->userInput = $_POST['userInput'];
+        }
+    }
+
+    function checkNotEmpty()
+    {
+
+        if (!empty($this->userInput)) {
+
+            $this->insertUser();
+        } else {
+
+            $error = new Error();
+            $error->insertUserFail();
+        }
+    }
+
+    function insertUser()
+    {
         try {
-                $conn = new DbConn();
-                $link = $conn->connect();
-                $stmt = $link->prepare("INSERT INTO users (name) VALUES (:user)");
-                $stmt->execute(array(':user' => $this->userInput));
-                $this->response();
+            $conn = new DbConn();
+            $link = $conn->connect();
+            $stmt = $link->prepare("INSERT INTO users (name) VALUES (:user)");
+            $stmt->execute(array(':user' => $this->userInput));
+            $this->response();
 
+        } catch (PDOException $e){
 
-        } catch (PDOException $e) {
-                $error=new Error();
-                $error->insertUserFail();
-
-                }
+            $error = new Error();
+            $error->insertUserFail();
         }
+    }
 
-        function response()
-        {
 
-                $response = new Response();
-                $response->insertUser();
-
-        }
 
 
 }
+
+
+
 

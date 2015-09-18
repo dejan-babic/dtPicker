@@ -22,10 +22,10 @@ class Controller{
 
     }
 
-    function insertUser()
+    function createUser()
     {
 
-        new InsertUser();
+        new CreateUser();
 
     }
     function deleteUser(){

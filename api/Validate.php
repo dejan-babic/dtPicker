@@ -11,14 +11,12 @@
 include 'autoload/boot.php';
 class Validate{
 
+    public $userId;
     public $userInput;
+
         function __construct()
         {
-            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                $this->userInput = $_GET['userInput'];
-            } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $this->userInput = $_POST['userInput'];
-            }
+          $this->checkMethod();
 
 
 
@@ -37,14 +35,13 @@ class Validate{
 
         }
 
-    function serverMethodCheck(){
 
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $this->userInput = $_GET['userInput'];
-        } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->userInput = $_POST['userInput'];
-        }
-    }
-}
+        function checkMethod(){
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                $this->userInput = $_GET['userInput'];
+            } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->userInput = $_POST['userInput'];
+            }
+}}
 
 
