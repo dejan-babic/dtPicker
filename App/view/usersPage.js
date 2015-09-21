@@ -48,24 +48,11 @@ Ext.override(Ext.form.HtmlEditor, {
 
 
 Ext.onReady(function(){
-	var store = new Ext.data.Store({
-		data: [
-			[
-				1,
-				"John Snow"
-			],
-			[
-				2,
-				"Aria Stark"
-			]
-		],
-		reader: new Ext.data.ArrayReader({id: 'id'}, ['id', 'name'])
-	});
-
 	var dsRecord = Ext.data.Record.create([
 		'id',
 		'name'
 	]);
+
 
 	var addNewUser = function(){
 		Ext.Msg.prompt('Add New User',
@@ -89,10 +76,18 @@ Ext.onReady(function(){
 	var grid = new Ext.grid.EditorGridPanel({
 		frame: true,
 		title: 'Users',
-		store: store,
+		store: config.usersStore,
 		autoHeight: true,
 		sm: new Ext.grid.RowSelectionModel({
-			singleSelect: true
+			singleSelect: true,
+			listeners:{
+				rowselect: {
+					fn: function(sm, index, record){
+						Ext.getCmp('userField').setValue(record.data.name);
+						Ext.getCmp('btnUserUpdate').setDisabled(false);
+					}
+				}
+			}
 		}),
 		columns:[
 			{header: "#", dataIndex: 'id'},

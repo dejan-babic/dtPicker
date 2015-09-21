@@ -39,7 +39,10 @@ Ext.onReady(function(){
 			},{
 				xtype: 'button',
 				text: 'Lucky Guy!',
-				cls: 'btn-big'
+				cls: 'btn-big',
+				handler: function(){
+					location.href = 'lucky-guy.html';
+				}
 			}]
 		}]
 	});

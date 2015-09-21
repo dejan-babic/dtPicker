@@ -2,19 +2,7 @@
  * Created by mawaheb.seraj on 9/21/2015.
  */
 Ext.onReady(function() {
-	var store = new Ext.data.Store({
-		data: [
-			[
-				1,
-				"Make coffe"
-			],
-			[
-				2,
-				"Clean Toilet"
-			]
-		],
-		reader: new Ext.data.ArrayReader({id: 'id'}, ['id', 'name'])
-	});
+
 	var dsRecord = Ext.data.Record.create([
 		'id',
 		'name'
@@ -25,7 +13,7 @@ Ext.onReady(function() {
 	var grid = new Ext.grid.EditorGridPanel({
 		frame: true,
 		title: 'Jobs',
-		store: store,
+		store: config.jobsStore,
 		autoHeight: true,
 		sm: new Ext.grid.RowSelectionModel({
 			singleSelect: true
