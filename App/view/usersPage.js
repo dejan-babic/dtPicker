@@ -45,6 +45,8 @@ Ext.override(Ext.form.Checkbox, {
 Ext.override(Ext.form.HtmlEditor, {
 	actionMode: 'wrap'
 });
+
+
 Ext.onReady(function(){
 	var store = new Ext.data.Store({
 		data: [
@@ -65,47 +67,6 @@ Ext.onReady(function(){
 		'name'
 	]);
 
-	var usersForm = new Ext.FormPanel({
-		title: 'Users Details Form',
-		id: usersForm,
-		items: [{
-			xtype: 'label',
-			text: 'Please select a user from the list'
-		},{
-			xtype: 'textfield',
-			fieldLabel: 'User Name',
-			id: 'userField',
-			hidden: true
-		}],
-		buttons: [
-			{
-				text: 'Update',
-				handler: function() {
-					Ext.getCmp('userField').setVisible(true)
-				}
-			},{
-				text: 'Delete',
-				handler: function(){
-					var sm = grid.getSelectionModel();
-					var sel = sm.getSelected();
-					if(sm.hasSelection()){
-						Ext.Msg.show({
-							title: "Remove user",
-							buttons: Ext.MessageBox.YESNOCANCEL,
-							msg: 'Remove ' + sel.data.name + '?',
-							fn: function(btn){
-								if (btn == 'yes'){
-									store.remove(sel);
-									usersForm.getForm().reset();
-								}
-							}
-						})
-					}
-				}
-			}
-		]
-	});
-
 	var addNewUser = function(){
 		Ext.Msg.prompt('Add New User',
 			'Please Enter the new user\'s Data',
@@ -124,32 +85,25 @@ Ext.onReady(function(){
 		)
 	};
 
-	var grid = new Ext.grid.GridPanel({
+	var editUserField = new Ext.form.TextField();
+	var grid = new Ext.grid.EditorGridPanel({
 		frame: true,
 		title: 'Users',
 		store: store,
 		autoHeight: true,
 		sm: new Ext.grid.RowSelectionModel({
-			singleSelect: true,
-			listeners:{
-				rowselect: {
-					fn: function(sm, index, record){
-						Ext.getCmp('userField').setValue(record.data.name)
-					}
-				}
-			}
+			singleSelect: true
 		}),
 		columns:[
 			{header: "#", dataIndex: 'id'},
-			{header: "Name", dataIndex: 'name'}
+			{header: "Name", dataIndex: 'name', editor: editUserField}
 		],
 		buttons:[{
 			text: 'New User',
 			handler: addNewUser
-
-
 		}]
 	});
+
 	var viewport = new Ext.Viewport({
 		layout: 'border',
 		renderTo: Ext.getBody(),
@@ -169,7 +123,28 @@ Ext.onReady(function(){
 		},{
 			region: 'center',
 			xtype: 'panel',
-			items: usersForm
+			items:[
+				grid
+			],
+			tbar: [{
+				text: 'Remove User',
+				handler: function(){
+					var sm = grid.getSelectionModel();
+					var sel = sm.getSelected();
+					if (sm.hasSelection()){
+						Ext.Msg.show({
+							title: 'Remove User',
+							buttons: Ext.MessageBox.YESNOCANCEL,
+							msg: 'Remove ' + sel.data.name + '?',
+							fn: function(btn){
+								if (btn == 'yes'){
+									grid.getStore().remove(sel);
+								}
+							}
+						})
+					}
+				}
+			}]
 		}]
 	});
 });
