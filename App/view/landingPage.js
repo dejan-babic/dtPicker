@@ -28,7 +28,10 @@ Ext.onReady(function(){
 			},{
 				xtype: 'button',
 				text: 'Jobs',
-				cls: 'btn-big'
+				cls: 'btn-big',
+				handler: function(){
+					location.href = 'jobs-page.html';
+				}
 			},{
 				xtype: 'button',
 				text: 'Settings',
