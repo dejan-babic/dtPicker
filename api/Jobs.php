@@ -6,6 +6,7 @@
  * Date: 9/22/2015
  * Time: 10:28 AM
  */
+include_once'autoload/boot.php';
 class Jobs
 
 {
@@ -23,10 +24,10 @@ class Jobs
     }
 
 
-    function read()
-    {
+    function read(){
 
         try {
+
             $conn = new DbConn();
             $link = $conn->connect();
 
@@ -45,15 +46,13 @@ class Jobs
 
         }   catch (PDOException $e) {
 
-            $error = new Error();
-            $error->readJobFail();
+            $this->response(false,'No Job Found',false);
 
 
         }
     }
 
-    function create()
-    {
+    function create(){
 
         try {
 
@@ -73,8 +72,7 @@ class Jobs
 
         }   catch(PDOException $e){
 
-            $error = new Error();
-            $error->createJobFail();
+            $this->response(false,'No Job Found',false);
 
         }
 
@@ -84,7 +82,9 @@ class Jobs
 
 
     function delete(){
+
         try {
+
             $conn = new DbConn();
             $link = $conn->connect();
             $stmt = $link->prepare("DELETE FROM jobs WHERE id= :userId");
@@ -102,16 +102,15 @@ class Jobs
 
         }   catch (PDOException $e) {
 
-            $error = new Error();
-            $error->deleteJobFail();
+            $this->response(false,'Something went wrong , job  has not been deleted',false);
+
         }
     }
 
     function update(){
 
-
-
         try {
+
             $conn = new DbConn();
             $link = $conn->connect();
             $stmt = $link->prepare("UPDATE jobs SET name = :userName WHERE id = :userId");
@@ -126,15 +125,16 @@ class Jobs
             }
 
         }   catch(PDOException $e) {
-            $error = new Error();
-            $error->updateJobFail();
+
+            $this->response(false,'Something went wrong , job  has not been updated' ,false);
         }
 
     }
 
-        function response($firstPar, $secPar, $thirdPar){
-        $response=new Response($firstPar, $secPar, $thirdPar);
-        $response->encodeData();
+    function response($firstPar, $secPar, $thirdPar) {
+
+            $response=new Response($firstPar, $secPar, $thirdPar);
+            $response->encodeData();
 
     }
 }

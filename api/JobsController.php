@@ -6,6 +6,7 @@
  * Date: 9/22/2015
  * Time: 10:18 AM
  */
+include_once'autoload/boot.php';
 class JobsController
 {
     function __construct($action,$arg,$arg1){

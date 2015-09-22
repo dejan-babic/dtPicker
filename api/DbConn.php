@@ -12,15 +12,19 @@ class dbConn
     private $dbUser = 'root';
     private $dbHost = 'localhost';
     public $dbConn;
+
     function connect() {
         try {
             $this->dbConn = new PDO('mysql:host=' . $this->dbHost . ';dbname=' . $this->dbName, $this->dbUser, $this->dbPass);
             $this->dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $this->dbConn;
-        } catch (PDOException $e) {
-            $error=new Error();
-            $error->dbErrorConnection();
+
+        }   catch (PDOException $e) {
+            $response=new Response(false, $e->getMessage(),false);
+            $response->encodeData();
         }
     }
+
+
 }
 

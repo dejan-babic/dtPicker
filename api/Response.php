@@ -7,7 +7,7 @@
  * Time: 3:39 PM
  */
 
-include 'autoload/boot.php';
+include_once'autoload/boot.php';
 class Response
 {
 

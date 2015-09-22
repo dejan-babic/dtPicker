@@ -8,10 +8,8 @@
  */
 
 
-include 'autoload/boot.php';
-class Validate
-{
-
+include_once'autoload/boot.php';
+class Validate{
 
     function __construct($action)
     {
@@ -19,17 +17,18 @@ class Validate
 
         if ($action == 'devtech') {
 
-           new Response(true, 'User logged in', true);
+            $response = new Response(true, 'User logged in', true);
+            $response->encodeData();
 
+        }else {
 
-        } else {
-
-            $error = new Error();
-            $error->validateFail();
+            $response = new Response(false, 'User NOT logged in', false);
+            $response->encodeData();
 
         }
 
     }
-}
 
+
+}
 

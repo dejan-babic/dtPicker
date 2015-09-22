@@ -6,7 +6,7 @@
  * Date: 9/21/2015
  * Time: 12:15 PM
  */
-include 'autoload/boot.php';
+include_once'autoload/boot.php';
 
 class URL
 {
@@ -34,10 +34,7 @@ class URL
            $this->arg1=$input[6];
        }
 
-
-
-
-    }
+   }
 
     function getEndPoint(){
 

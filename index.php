@@ -2,8 +2,6 @@
 
 include_once'api/autoload/boot.php';
 
-$method=$_SERVER['REQUEST_METHOD'];
-
 $request=$_SERVER['REQUEST_URI'];
 
 $uri=explode('/',rtrim($request,'/'));
@@ -28,6 +26,7 @@ switch ($endPoint){
 
     case 'validate':
         new Validate($action);
+        break;
 
     default : echo 'unknown request!!!';
 }

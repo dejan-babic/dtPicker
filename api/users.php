@@ -7,7 +7,7 @@
  * Time: 2:46 PM
  */
 
-include 'autoload/boot.php';
+include_once'autoload/boot.php';
 class Users
 {
 
@@ -46,8 +46,7 @@ class Users
 
         }   catch (PDOException $e) {
 
-            $error = new Error();
-            $error->readUserFail();
+            $this->response(false,'No users FAIL',false);
 
 
         }
@@ -74,8 +73,7 @@ class Users
 
         }   catch(PDOException $e){
 
-            $error = new Error();
-            $error->createUserFail();
+            $this->response(false,'Something went wrong , user has not been created',false);
 
         }
 
@@ -85,6 +83,7 @@ class Users
 
 
     function delete(){
+
         try {
             $conn = new DbConn();
             $link = $conn->connect();
@@ -94,7 +93,7 @@ class Users
 
             if ($result == 1) {
 
-                $this->response(true,'User with id= ' .$this->arg. ' has been deleted',true );
+                $this->response(true,'User with id: ' .$this->arg. ' has been deleted',true );
 
             } else {
 
@@ -103,14 +102,11 @@ class Users
 
         }   catch (PDOException $e) {
 
-            $error = new Error();
-            $error->deleteUserFail();
+            $this->response(false,'ERROR : No user has been deleted'  ,false);
         }
     }
 
     function update(){
-
-
 
         try {
             $conn = new DbConn();
@@ -127,14 +123,13 @@ class Users
             }
 
         }   catch(PDOException $e) {
-            $error = new Error();
-            $error->updateUserFail();
+
+            $this->response(false,'Something went wrong , user has not been updated' ,false);
         }
 
     }
 
-
-        function response($firstPar, $secPar, $thirdPar){
+    function response($firstPar, $secPar, $thirdPar){
 
             $response=new Response($firstPar, $secPar, $thirdPar);
             $response->encodeData();
