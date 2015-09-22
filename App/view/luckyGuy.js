@@ -11,21 +11,27 @@ Ext.onReady(function(){
 		'name'
 	]);
 
+	/* this array is used to hold the ids of subsetUsers array, before adding any user to the subset grid, we check to see if
+		the user we are adding already is included.
+	*/
+	var subsetIdsArr = [];
 	// Used to add a user from the main users list to the subset users list.
 	// TODO [MS]: Check if the user is already in the subset, If so, prevent from adding again.
-	var addUsr2Subset = function(){
+	var addUsr2Subset = function() {
 		var sm = usersGrid.getSelectionModel();
 		var sel = sm.getSelected();
-		var store = subsetGrid.getStore();
-		if (sm.hasSelection()){
-			store.insert(
-				store.getCount(),
-				new dsRecord({
-					id: sel.data.id,
-					name: sel.data.name
-				})
-			)
-		}else{
+		var subsetStore = subsetGrid.getStore();
+		if (sm.hasSelection()) {
+			if (subsetIdsArr.indexOf(sel.data.id) == -1) {
+				subsetStore.insert(subsetStore.getCount(), new dsRecord({
+					id: sel.data.id, name: sel.data.name
+				}));
+				subsetIdsArr.push(sel.data.id);
+			} else {
+				Ext.Msg.alert('Error', 'The user you are trying to add is already included, please choose another user.')
+			}
+
+		} else {
 			Ext.Msg.alert('No selection', 'Please select a user from the list');
 		}
 	};
@@ -140,16 +146,6 @@ Ext.onReady(function(){
 			handler: randomize
 			}]
 		}
-
-			//title: 'Randomly assign jobs.',
-			//height: 500,
-			//items:[{
-			//	//xtype: 'button',
-				//text: 'Assign',
-				//cls: 'btn-randomize',
-				//handler: randomize
-			//}]
-		//}
 	]
 	})
 });
