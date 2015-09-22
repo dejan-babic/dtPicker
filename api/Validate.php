@@ -9,39 +9,27 @@
 
 
 include 'autoload/boot.php';
-class Validate{
-
-    public $userId;
-    public $userInput;
-
-        function __construct()
-        {
-          $this->checkMethod();
+class Validate
+{
 
 
-
-            if ($this->userInput == 'devtech') {
-
-                $response= new Response();
-                $response->validate();
+    function __construct($action)
+    {
 
 
-            } else {
+        if ($action == 'devtech') {
 
-               $error= new Error();
-               $error->validateFail();
+           new Response(true, 'User logged in', true);
 
-            }
+
+        } else {
+
+            $error = new Error();
+            $error->validateFail();
 
         }
 
-
-        function checkMethod(){
-            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                $this->userInput = $_GET['userInput'];
-            } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $this->userInput = $_POST['userInput'];
-            }
-}}
+    }
+}
 
 

@@ -16,29 +16,25 @@ class Error
               new JsonEncode(false,'Validate failed',false);
         }
 
-        function getUsersFail(){
-               new JsonEncode(false,'No users retrived',false);
+        function readUserFail(){
+               new JsonEncode(false,'No users FAIL',false);
 
         }
-        function insertUserFail(){
+        function createUserFail(){
                new JsonEncode(false,'Something went wrong , user has not been inserted',false);
 
-        }
-        function serverMethodNotExists(){
-
-                new JsonEncode(false,'Method does not exist',false);
         }
 
         function dbErrorConnection(){
 
                 new JsonEncode(false,'Not connected to base',false);
         }
-        function deleteUserError($userId){
+        function deleteUserFail(){
 
-                new JsonEncode(false,'No user with id = '.$userId.' exists'  ,false);
+                new JsonEncode(false,'ERROR : No user has been deleted'  ,false);
 
         }
-        function updateUserError(){
+        function updateUserFail(){
 
                 new JsonEncode(false,'Something went wrong , user has not been updated' ,false);
 

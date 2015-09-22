@@ -8,32 +8,15 @@
  */
 
 include 'autoload/boot.php';
-class Response{
+class Response
+{
 
-    function validate(){
-        new JsonEncode(true,'user logged in',true);
+
+    function __construct($firstPar, $secondPar, $thirdPar)
+    {
+
+        new JsonEncode($firstPar, $secondPar, $thirdPar);
     }
 
-    function getUsers($users){
-
-
-        new JsonEncode(true,'list of users OK',$users);
-
-    }
-    function insertUser(){
-
-        new JsonEncode(true,'user inserted',true);
-
-    }
-    function deleteUser($userName,$Id){
-
-        new JsonEncode(true,'user with the name of '.$Id.' and with the id of '.$userName.' has been deleted' ,true);
-
-    }
-    function updateUser(){
-
-        new JsonEncode(true,'User name changed' ,true);
-
-    }
 }
 
