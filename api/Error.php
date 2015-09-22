@@ -21,14 +21,10 @@ class Error
 
         }
         function createUserFail(){
-               new JsonEncode(false,'Something went wrong , user has not been inserted',false);
+               new JsonEncode(false,'Something went wrong , user has not been created',false);
 
         }
 
-        function dbErrorConnection(){
-
-                new JsonEncode(false,'Not connected to base',false);
-        }
         function deleteUserFail(){
 
                 new JsonEncode(false,'ERROR : No user has been deleted'  ,false);
@@ -38,6 +34,30 @@ class Error
 
                 new JsonEncode(false,'Something went wrong , user has not been updated' ,false);
 
+        }
+        function readJobFail(){
+                new JsonEncode(false,'No Job Found',false);
+
+        }
+        function createJobFail(){
+                new JsonEncode(false,'Something went wrong , job  has not been created',false);
+
+        }
+
+        function deleteJobFail(){
+
+                new JsonEncode(false,'ERROR : No job  has been deleted'  ,false);
+
+        }
+        function updateJobFail(){
+
+                new JsonEncode(false,'Something went wrong , job  has not been updated' ,false);
+
+        }
+
+        function dbErrorConnection(){
+
+                new JsonEncode(false,'Not connected to base',false);
         }
 
 }

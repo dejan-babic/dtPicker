@@ -11,11 +11,22 @@ include 'autoload/boot.php';
 class Response
 {
 
+    public $responseArray;
 
-    function __construct($firstPar, $secondPar, $thirdPar)
-    {
+    function __construct($firstPar, $secondPar, $thirdPar){
 
-        new JsonEncode($firstPar, $secondPar, $thirdPar);
+        $this->responseArray=array('success'=>$firstPar,
+                                   'msg' => $secondPar,
+                                   'data'=> $thirdPar);
+
+
+    }
+
+    function encodeData(){
+
+        header('Content-Type: application/json');
+        echo json_encode($this->responseArray);
+
     }
 
 }

@@ -23,7 +23,7 @@ switch ($endPoint){
         break;
 
     case 'jobs':
-        new jobsController();
+        new JobsController($action,$arg,$arg1);
         break;
 
     case 'validate':

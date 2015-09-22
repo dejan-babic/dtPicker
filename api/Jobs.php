@@ -3,12 +3,11 @@
 /**
  * Created by PhpStorm.
  * User: drazen.popov
- * Date: 9/21/2015
- * Time: 2:46 PM
+ * Date: 9/22/2015
+ * Time: 10:28 AM
  */
+class Jobs
 
-include 'autoload/boot.php';
-class Users
 {
 
     public $arg;
@@ -29,15 +28,15 @@ class Users
 
         try {
             $conn = new DbConn();
-            $link=$conn->connect();
+            $link = $conn->connect();
 
             if (isset($this->arg)) {
 
-                $stmt = $link->prepare("SELECT * FROM users WHERE id=$this->arg");
+                $stmt = $link->prepare("SELECT * FROM jobs WHERE id=$this->arg");
 
             } else {
 
-                $stmt = $link->prepare("SELECT * FROM users");
+                $stmt = $link->prepare("SELECT * FROM jobs");
 
             }
             $stmt->execute();
@@ -47,7 +46,7 @@ class Users
         }   catch (PDOException $e) {
 
             $error = new Error();
-            $error->readUserFail();
+            $error->readJobFail();
 
 
         }
@@ -60,13 +59,13 @@ class Users
 
             $conn = new DbConn();
             $link = $conn->connect();
-            $stmt = $link->prepare("INSERT INTO users (name) VALUES (:user)");
+            $stmt = $link->prepare("INSERT INTO jobs (name) VALUES (:user)");
             $stmt->execute(array(':user' => rawurldecode($this->arg)));
 
             $result = $stmt->rowCount();
 
             if ($result == 1) {
-                $this->response(true, 'User created successfully', true);
+                $this->response(true, 'Job created successfully', true);
             } else {
 
                 return false;
@@ -75,7 +74,7 @@ class Users
         }   catch(PDOException $e){
 
             $error = new Error();
-            $error->createUserFail();
+            $error->createJobFail();
 
         }
 
@@ -88,13 +87,13 @@ class Users
         try {
             $conn = new DbConn();
             $link = $conn->connect();
-            $stmt = $link->prepare("DELETE FROM users WHERE id= :userId");
+            $stmt = $link->prepare("DELETE FROM jobs WHERE id= :userId");
             $stmt->execute(array(':userId' => $this->arg));
             $result = $stmt->rowCount();
 
             if ($result == 1) {
 
-                $this->response(true,'User with id= ' .$this->arg. ' has been deleted',true );
+                $this->response(true,'Job with id: ' .$this->arg. ' has been deleted',true );
 
             } else {
 
@@ -104,7 +103,7 @@ class Users
         }   catch (PDOException $e) {
 
             $error = new Error();
-            $error->deleteUserFail();
+            $error->deleteJobFail();
         }
     }
 
@@ -115,12 +114,12 @@ class Users
         try {
             $conn = new DbConn();
             $link = $conn->connect();
-            $stmt = $link->prepare("UPDATE users SET name = :userName WHERE id = :userId");
-            $stmt->execute(array(':userName' => rawurldecode($this->arg1) , ':userId' => $this->arg));
+            $stmt = $link->prepare("UPDATE jobs SET name = :userName WHERE id = :userId");
+            $stmt->execute(array(':userName' =>rawurldecode($this->arg1) , ':userId' => $this->arg));
             $result=  $stmt->rowCount();
 
             if ($result == 1){
-                $this->response(true,'User with id= ' .$this->arg. ' has been updated, and now his name is '.rawurldecode($this->arg1),true);
+                $this->response(true,'Job with id= ' .$this->arg. ' has been updated, and now his name is '.rawurldecode($this->arg1),true);
             }else{
 
                 return false;
@@ -128,18 +127,14 @@ class Users
 
         }   catch(PDOException $e) {
             $error = new Error();
-            $error->updateUserFail();
+            $error->updateJobFail();
         }
 
     }
 
-
         function response($firstPar, $secPar, $thirdPar){
+        $response=new Response($firstPar, $secPar, $thirdPar);
+        $response->encodeData();
 
-            $response=new Response($firstPar, $secPar, $thirdPar);
-            $response->encodeData();
     }
-
-
-
 }
