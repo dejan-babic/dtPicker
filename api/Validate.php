@@ -20,7 +20,7 @@ class Validate{
             $response = new Response(true, 'User logged in', true);
             $response->encodeData();
 
-        }else {
+        } else {
 
             $response = new Response(false, 'User NOT logged in', false);
             $response->encodeData();

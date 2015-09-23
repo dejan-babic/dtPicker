@@ -43,7 +43,6 @@ class Users
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $this->response(true, 'OK', $results);
-
         }   catch (PDOException $e) {
 
             $this->response(false,'No users FAIL',false);
@@ -65,7 +64,7 @@ class Users
             $result = $stmt->rowCount();
 
             if ($result == 1) {
-                $this->response(true, 'User created successfully', true);
+            $this->response(true, 'User created successfully', true);
             } else {
 
                 return false;

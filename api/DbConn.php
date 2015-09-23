@@ -19,7 +19,7 @@ class dbConn
             $this->dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $this->dbConn;
 
-        }   catch (PDOException $e) {
+        } catch (PDOException $e) {
             $response=new Response(false, $e->getMessage(),false);
             $response->encodeData();
         }

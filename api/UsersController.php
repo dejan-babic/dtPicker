@@ -13,29 +13,27 @@ class UsersController
 
     function __construct($action,$arg,$arg1){
 
+        $response=new Users($action,$arg,$arg1);
+
          switch($action){
 
               case 'create':{
 
-                    $response=new Users($action,$arg,$arg1);
                     $response->create();
                     break;
               }
               case 'read':{
 
-                    $response=new Users($action,$arg,$arg1);
                     $response->read();
                     break;
               }
               case 'update':{
 
-                    $response=new Users($action,$arg,$arg1);
                     $response->update();
                     break;
               }
               case 'delete':{
 
-                    $response=new Users($action,$arg,$arg1);
                     $response->delete();
                     break;
               }

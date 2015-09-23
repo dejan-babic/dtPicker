@@ -7,9 +7,7 @@
  * Time: 10:28 AM
  */
 include_once'autoload/boot.php';
-class Jobs
-
-{
+class Jobs {
 
     public $arg;
     public $arg1;
@@ -23,8 +21,7 @@ class Jobs
         $this->action = $action;
     }
 
-
-    function read(){
+    function read() {
 
         try {
 
@@ -32,54 +29,42 @@ class Jobs
             $link = $conn->connect();
 
             if (isset($this->arg)) {
-
                 $stmt = $link->prepare("SELECT * FROM jobs WHERE id=$this->arg");
-
             } else {
-
                 $stmt = $link->prepare("SELECT * FROM jobs");
-
             }
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $this->response(true, 'OK', $results);
 
-        }   catch (PDOException $e) {
-
+        } catch (PDOException $e) {
             $this->response(false,'No Job Found',false);
-
-
         }
     }
 
     function create(){
 
         try {
-
             $conn = new DbConn();
-            $link = $conn->connect();
+            $link=$conn->connect();
             $stmt = $link->prepare("INSERT INTO jobs (name) VALUES (:user)");
             $stmt->execute(array(':user' => rawurldecode($this->arg)));
 
             $result = $stmt->rowCount();
 
             if ($result == 1) {
-                $this->response(true, 'Job created successfully', true);
+                $this->response(true, 'Job created successfully with the id: '.$link->lastInsertId(), true);
             } else {
 
                 return false;
             }
 
-        }   catch(PDOException $e){
+        } catch(PDOException $e){
 
             $this->response(false,'No Job Found',false);
 
         }
-
-
-
     }
-
 
     function delete(){
 
@@ -93,14 +78,14 @@ class Jobs
 
             if ($result == 1) {
 
-                $this->response(true,'Job with id: ' .$this->arg. ' has been deleted',true );
+                $this->response(true,'Job with id: ' .$link->lastInsertId(). ' has been deleted',true );
 
             } else {
 
                 return false;
             }
 
-        }   catch (PDOException $e) {
+        } catch (PDOException $e) {
 
             $this->response(false,'Something went wrong , job  has not been deleted',false);
 
@@ -124,7 +109,7 @@ class Jobs
                 return false;
             }
 
-        }   catch(PDOException $e) {
+        } catch(PDOException $e) {
 
             $this->response(false,'Something went wrong , job  has not been updated' ,false);
         }
@@ -133,8 +118,8 @@ class Jobs
 
     function response($firstPar, $secPar, $thirdPar) {
 
-            $response=new Response($firstPar, $secPar, $thirdPar);
-            $response->encodeData();
+        $response=new Response($firstPar, $secPar, $thirdPar);
+        $response->encodeData();
 
     }
 }
