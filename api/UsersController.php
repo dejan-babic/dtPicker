@@ -7,39 +7,31 @@
  * Time: 1:17 PM
  */
 
-include_once'autoload/boot.php';
+
 class UsersController
 {
 
-    function __construct($action,$arg,$arg1){
+    public $firstParameter;
+    public $secondParameter;
+    public $action;
+    public $link;
 
-        $response=new Users($action,$arg,$arg1);
+    function __construct($link , $action , $firstParameter , $secondParameter)
+    {
+        $this->firstParameter = $firstParameter;
+        $this->secondParameter = $secondParameter;
+        $this->action = $action;
+        $this->link = $link;
+    }
 
-         switch($action){
 
-              case 'create':{
 
-                    $response->create();
-                    break;
-              }
-              case 'read':{
 
-                    $response->read();
-                    break;
-              }
-              case 'update':{
+    function actionSelect(){
 
-                    $response->update();
-                    break;
-              }
-              case 'delete':{
-
-                    $response->delete();
-                    break;
-              }
-              default: echo 'unknown action !!!!';
-                    break;
-         }
+        $usersController=new Users($this->link , $this->firstParameter , $this->secondParameter);
+        return call_user_func ( array( $usersController, $this->action) );
 
     }
+
 }

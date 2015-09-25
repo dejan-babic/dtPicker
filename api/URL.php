@@ -6,14 +6,14 @@
  * Date: 9/21/2015
  * Time: 12:15 PM
  */
-include_once'autoload/boot.php';
+
 
 class URL
 {
     public $endpoint;
     public $action;
-    public $arg;
-    public $arg1;
+    public $firstParameter;
+    public $secondParameter;
 
 
    function __construct($input){
@@ -27,11 +27,11 @@ class URL
 
         }
         if (isset($input[5])){
-            $this->arg=$input[5];
+            $this->firstParameter=$input[5];
         }
 
        if (isset($input[6])){
-           $this->arg1=$input[6];
+           $this->secondParameter=$input[6];
        }
 
    }
@@ -44,14 +44,14 @@ class URL
 
         return $this->action;
     }
-    function getArg(){
+    function getFirstParameter(){
 
-        return $this->arg;
+        return $this->firstParameter;
     }
 
-    function getArg1(){
+    function getSecondParameter(){
 
-        return $this->arg1;
+        return $this->secondParameter;
     }
 
 }

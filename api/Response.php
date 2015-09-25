@@ -7,27 +7,28 @@
  * Time: 3:39 PM
  */
 
-include_once'autoload/boot.php';
+
 class Response
 {
 
-    public $responseArray;
+    public $outputArray;
 
-    function __construct($firstPar, $secondPar, $thirdPar){
-
-        $this->responseArray=array('success'=>$firstPar,
-                                   'msg' => $secondPar,
-                                   'data'=> $thirdPar);
-
-
-    }
 
     function encodeData(){
 
         header('Content-Type: application/json');
-        echo json_encode($this->responseArray);
+        echo json_encode($this->outputArray);
 
     }
+
+    function setOutputData($output){
+
+        $this->outputArray = array('success' => $output[0],
+                                   'msg' => $output[1],
+                                   'data'=> $output[2]);
+    }
+
+
 
 }
 

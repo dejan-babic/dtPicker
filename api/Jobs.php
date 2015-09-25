@@ -6,54 +6,55 @@
  * Date: 9/22/2015
  * Time: 10:28 AM
  */
-include_once'autoload/boot.php';
+
 class Jobs {
 
-    public $arg;
-    public $arg1;
-    public $action;
+    public $firstParameter;
+    public $secondParameter;
+    public $link;
 
-    function __construct($action , $arg ,$arg1 )
+    function __construct ($link, $firstParameter, $secondParameter)
     {
 
-        $this->arg = $arg;
-        $this->arg1 = $arg1;
-        $this->action = $action;
+        $this->firstParameter = $firstParameter;
+        $this->secondParameter = $secondParameter;
+        $this->link = $link;
     }
 
     function read() {
 
         try {
 
-            $conn = new DbConn();
-            $link = $conn->connect();
-
-            if (isset($this->arg)) {
-                $stmt = $link->prepare("SELECT * FROM jobs WHERE id=$this->arg");
+            if (isset($this->firstParameter)) {
+                $stmt = $this->link->prepare("SELECT * FROM jobs WHERE id=$this->firstParameter");
             } else {
-                $stmt = $link->prepare("SELECT * FROM jobs");
+                $stmt = $this->link->prepare("SELECT * FROM jobs");
             }
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $this->response(true, 'OK', $results);
+
+            return array(true, 'OK', $results) ;
 
         } catch (PDOException $e) {
-            $this->response(false,'No Job Found',false);
+
+            return array(false, 'No users FAIL', $e->getMessage());
+
         }
     }
 
     function create(){
 
         try {
-            $conn = new DbConn();
-            $link=$conn->connect();
-            $stmt = $link->prepare("INSERT INTO jobs (name) VALUES (:user)");
-            $stmt->execute(array(':user' => rawurldecode($this->arg)));
+
+            $stmt = $this->link->prepare("INSERT INTO jobs (name) VALUES (:user)");
+            $stmt->execute(array(':user' => rawurldecode($this->firstParameter)));
 
             $result = $stmt->rowCount();
 
             if ($result == 1) {
-                $this->response(true, 'Job created successfully with the id: '.$link->lastInsertId(), true);
+
+                return array(true, 'Job created successfully with the id: '.$this->link->lastInsertId(), true);
+
             } else {
 
                 return false;
@@ -61,7 +62,7 @@ class Jobs {
 
         } catch(PDOException $e){
 
-            $this->response(false,'No Job Found',false);
+                return array(false, 'Error job has not been created', false);
 
         }
     }
@@ -70,24 +71,22 @@ class Jobs {
 
         try {
 
-            $conn = new DbConn();
-            $link = $conn->connect();
-            $stmt = $link->prepare("DELETE FROM jobs WHERE id= :userId");
-            $stmt->execute(array(':userId' => $this->arg));
+            $stmt = $this->link->prepare("DELETE FROM jobs WHERE id= :userId");
+            $stmt->execute(array(':userId' => $this->firstParameter));
             $result = $stmt->rowCount();
 
             if ($result == 1) {
 
-                $this->response(true,'Job with id: ' .$link->lastInsertId(). ' has been deleted',true );
+                return array(true, 'Job with id: ' .$this->link->lastInsertId(). ' has been deleted', true);
 
             } else {
 
-                return false;
+                return array(false, 'ERROR : Job with id: ' .$this->firstParameter. ' has not been deleted', false);
             }
 
-        } catch (PDOException $e) {
+        }   catch (PDOException $e) {
 
-            $this->response(false,'Something went wrong , job  has not been deleted',false);
+                return array(false, 'Something went wrong , job  has not been deleted', $e->getMessage());
 
         }
     }
@@ -96,30 +95,24 @@ class Jobs {
 
         try {
 
-            $conn = new DbConn();
-            $link = $conn->connect();
-            $stmt = $link->prepare("UPDATE jobs SET name = :userName WHERE id = :userId");
-            $stmt->execute(array(':userName' =>rawurldecode($this->arg1) , ':userId' => $this->arg));
+            $stmt = $this->link->prepare("UPDATE jobs SET name = :userName WHERE id = :userId");
+            $stmt->execute(array(':userName' =>rawurldecode($this->secondParameter) , ':userId' => $this->firstParameter));
             $result=  $stmt->rowCount();
 
             if ($result == 1){
-                $this->response(true,'Job with id= ' .$this->arg. ' has been updated, and now his name is '.rawurldecode($this->arg1),true);
+                return array(true, 'Job with id= ' . $this->firstParameter . ' has been updated, and now his name is '
+                              .rawurldecode($this->secondParameter), true);
             }else{
 
-                return false;
+                return array(false, 'ERROR : Job with id= ' . $this->firstParameter . ' has NOT been updated ', false);
             }
 
-        } catch(PDOException $e) {
+        }   catch(PDOException $e) {
 
-            $this->response(false,'Something went wrong , job  has not been updated' ,false);
+                return array(false, 'Something went wrong , job  has not been updated', false);
         }
 
     }
 
-    function response($firstPar, $secPar, $thirdPar) {
 
-        $response=new Response($firstPar, $secPar, $thirdPar);
-        $response->encodeData();
-
-    }
 }

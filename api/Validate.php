@@ -8,7 +8,7 @@
  */
 
 
-include_once'autoload/boot.php';
+
 class Validate{
 
     function __construct($action)

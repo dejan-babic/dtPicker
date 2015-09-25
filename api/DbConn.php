@@ -20,8 +20,7 @@ class dbConn
             return $this->dbConn;
 
         } catch (PDOException $e) {
-            $response=new Response(false, $e->getMessage(),false);
-            $response->encodeData();
+            echo 'Error :' . $e->getMessage();
         }
     }
 

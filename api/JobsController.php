@@ -6,38 +6,26 @@
  * Date: 9/22/2015
  * Time: 10:18 AM
  */
-include_once'autoload/boot.php';
+
 class JobsController
 {
-    function __construct($action,$arg,$arg1){
+    public $firstParameter;
+    public $secondParameter;
+    public $action;
+    public $link;
 
-        $response=new Jobs($action,$arg,$arg1);
+    function __construct($link, $action, $firstParameter, $secondParameter)
+    {
+        $this->firstParameter = $firstParameter;
+        $this->secondParameter = $secondParameter;
+        $this->action = $action;
+        $this->link = $link;
+    }
 
-        switch($action){
 
-            case 'create':{
+    function actionSelect(){
 
-                $response->create();
-                break;
-            }
-            case 'read':{
-
-                $response->read();
-                break;
-            }
-            case 'update':{
-
-                $response->update();
-                break;
-            }
-            case 'delete':{
-
-                $response->delete();
-                break;
-            }
-            default: echo 'unknown action !!!!';
-                break;
-        }
-
+        $jobsController=new Jobs($this->link, $this->firstParameter, $this->secondParameter);
+        return call_user_func ( array( $jobsController, $this->action) );
     }
 }
