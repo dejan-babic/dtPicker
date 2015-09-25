@@ -1,6 +1,8 @@
 <?php
 
-include_once'api/autoload/boot.php';
+include_once 'api/autoload/Autoload.php';
+
+spl_autoload_register('Autoloader::loader');
 
 $request=$_SERVER['REQUEST_URI'];
 
@@ -8,28 +10,22 @@ $uri=explode('/',rtrim($request,'/'));
 
 $request=new URL($uri);
 
+$bdConn=new dbConn();
+$link=$bdConn->connect();
+
 $endPoint=$request->getEndPoint();
 $action =$request->getAction();
-$arg=$request->getArg();
-$arg1=$request->getArg1();
+$firstParameter=$request->getFirstParameter();
+$secondParameter=$request->getSecondParameter();
 
+$response=new Response;
 
-switch ($endPoint){
+try {$Controller = EndPointFactory::getInstance($link, $endPoint, $action, $firstParameter, $secondParameter);
+     $response->setOutputData($Controller->actionSelect());
+     $response->encodeData();
 
-    case 'users':
-        new UsersController($action,$arg,$arg1);
-        break;
+}catch(IllegalEndPointException $e){
 
-    case 'jobs':
-        new JobsController($action,$arg,$arg1);
-        break;
-
-    case 'validate':
-        new Validate($action);
-        break;
-
-    default : echo 'unknown request!!!';
+    echo $e->error();
 }
-
-
 
